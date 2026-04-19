@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 const navLinks = [
   { label: 'Picture of the Day', href: '#apod' },
   { label: 'Mars', href: '#mars' },
+  { label: 'Moon', href: '#moon' },
   { label: 'Asteroids', href: '#asteroids' },
 ]
 

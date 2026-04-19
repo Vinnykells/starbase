@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import AnimatedSection from './AnimatedSection'
 
@@ -10,10 +10,21 @@ const rovers = [
   { id: 'opportunity',  name: 'Opportunity',  status: 'Complete', launched: '2003', emoji: '🏁' },
 ]
 
-export default function MarsSection({ photos }) {
+export default function MarsSection({ photos: initialPhotos }) {
   const [selected, setSelected] = useState(null)
   const [activeRover, setActiveRover] = useState('curiosity')
-  const displayPhotos = photos?.slice(0, 9) || []
+  const [photos, setPhotos] = useState(initialPhotos || [])
+  const [loading, setLoading] = useState(false)
+  const displayPhotos = photos.slice(0, 9)
+
+  useEffect(() => {
+    setLoading(true)
+    fetch(`/api/mars?rover=${activeRover}`)
+      .then((r) => r.json())
+      .then((data) => setPhotos(data))
+      .catch(() => setPhotos([]))
+      .finally(() => setLoading(false))
+  }, [activeRover])
 
   return (
     <section id="mars" className="py-32 px-6 relative">
@@ -69,7 +80,11 @@ export default function MarsSection({ photos }) {
           </div>
         </AnimatedSection>
 
-        {displayPhotos.length > 0 ? (
+        {loading ? (
+          <div className="text-center py-20">
+            <p className="text-space-gray animate-pulse">Loading photos...</p>
+          </div>
+        ) : displayPhotos.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {displayPhotos.map((photo, index) => (
               <AnimatedSection key={photo.id} delay={index * 0.05}>
