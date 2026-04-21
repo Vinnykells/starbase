@@ -25,6 +25,7 @@ export default function Footer() {
               {[
                 { label: 'Picture of the Day', href: '#apod' },
                 { label: 'Mars', href: '#mars' },
+                { label: 'Moon', href: '#moon' },
                 { label: 'Asteroids', href: '#asteroids' },
               ].map((link) => (
                 <button
