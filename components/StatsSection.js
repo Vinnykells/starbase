@@ -12,7 +12,7 @@ const stats = [
 
 export default function StatsSection() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const isInView = useInView(ref, { once: true, margin: '0px 0px -50px 0px' })
 
   return (
     <section className="py-20 px-6 border-y border-cosmic-blue/10">
